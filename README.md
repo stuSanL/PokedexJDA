@@ -37,3 +37,75 @@ Dá uma passada no **resumo inicial**, é tipo o Centro Pokémon: cura teus erro
 - Seja ágil, curioso e preparado pra capturar bugs raros.  
 - Nosso lema aqui é: **“Errar é humano, mas fazer o bot responder é lendário.”** ✨  
 - E se nada funcionar... reinicia a IDE. É o equivalente a mandar o Snorlax dormir pra resetar o dia 😴  
+
+## Códigos
+
+```
+@Override
+    public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
+        String componentId = event.getComponentId();
+        int totalPokemon = ps.getpokemons().size();
+        int totalPages = (int) Math.ceil(totalPokemon / (double) pokemonPorPag);
+
+        if(componentId.startsWith("search")){
+
+            TextInput ti = TextInput
+                    .create("pageid", TextInputStyle.SHORT)
+                    .setPlaceholder("ID da pagina a ser procurada")
+                    .build();
+            Modal md = Modal
+                    .create("search","search")
+                    .addComponents(
+                            Label.of("Type Page ID:", ti)
+                    )
+                    .build();
+            event.replyModal(md).queue();
+
+        } else if (componentId.startsWith("next:") || componentId.startsWith("prev:")) {
+            String[] parts = componentId.split(":");
+            String action = parts[0];
+            int currentPage = Integer.parseInt(parts[1]);
+
+            if (action.equals("next")) {
+                currentPage++;
+            } else if (action.equals("prev")) {
+                currentPage--;
+            }
+
+            editMessagePokedex(currentPage, totalPages, event);
+
+        } else if(componentId.startsWith("start")){
+            editMessagePokedex(0, totalPages, event);
+
+        } else if(componentId.startsWith("end")){
+            editMessagePokedex(totalPages-1, totalPages, event);
+
+        } else if(componentId.equals("close")){
+            event.deferEdit().queue();
+            event.getMessage().delete().queue();
+        } else if(componentId.startsWith("view")){
+            int id = Integer.parseInt(componentId.replace("view:", ""));
+            event.editComponents(Container.of(pokemonView(id))).useComponentsV2().queue();
+        } else if(componentId.startsWith("back")){
+            int page = (Integer.parseInt(componentId.replace("back:", ""))-1) / pokemonPorPag;
+            editMessagePokedex(page, totalPages, event);
+        }
+    }
+
+    @Override
+    public void onModalInteraction(@NotNull ModalInteractionEvent event) {
+        String componentId = event.getModalId();
+        int totalPokemon = ps.getpokemons().size();
+        int paginas = (totalPokemon / pokemonPorPag) + (totalPokemon % pokemonPorPag == 0 ? 0 : 1);
+        if(componentId.equals("search")){
+            try{
+                int currentPage = -1 + Integer.parseInt(Objects.requireNonNull(event.getValue("pageid")).getAsString());
+                if(currentPage < 0 || currentPage > paginas) throw new IllegalArgumentException();
+                editMessagePokedex(currentPage, paginas, event);
+            } catch (IllegalArgumentException e){
+                event.reply("Insira um argumento válido! ").setEphemeral(true).queue();
+            }
+
+        }
+    }
+```
