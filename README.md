@@ -1,13 +1,12 @@
-[slides]: https://www.canva.com/design/DAG2VyxGyNU/4ZjURaIBXrrobF3RW0hNqQ/view?utm_content=DAG2VyxGyNU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hdeed28bbf5 "Canva"
-[tutorial]: https://docs.google.com/document/d/1ClhS7I11RUGGhpUfvLGt0Waxb68bhQv9Jc8yWT4OzKo/edit?usp=sharing "Google Docs"
+
 # 🏆 PokedexJDA
 
 ---
 
 ## Material do minicurso 📖
 
-- [Slides](slides)
-- [Resumo da aula 1](tutorial)
+- [Slides](https://www.canva.com/design/DAG2VyxGyNU/4ZjURaIBXrrobF3RW0hNqQ/view?utm_content=DAG2VyxGyNU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hdeed28bbf5)
+- [Resumo da aula 1](https://docs.google.com/document/d/1ClhS7I11RUGGhpUfvLGt0Waxb68bhQv9Jc8yWT4OzKo/edit?usp=sharing)
 
 ---
 
